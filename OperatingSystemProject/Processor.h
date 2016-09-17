@@ -4,6 +4,8 @@ class Processor
 public:
 	Processor();
 	~Processor();
+	void interrupt();
+	void interrupt(int* instructions);
 	
 private:
 	//registers[0] is the accumulator
@@ -11,6 +13,10 @@ private:
 	//registers[2] --> registers[15] are general purpose registers
 	int* registers; //holds 16 integers, initialized in the constructor
 	unsigned short pc; //program counter
+
+	void fetch(); //fetch the next instruction
+	void decode(int instruction); //decode the instruction given
+	void execute(); //execute the instruction
 
 	void RD(); //not sure how to implement yet
 	void WR(); //not sure how to implement yet
