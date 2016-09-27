@@ -1,4 +1,5 @@
 #include "Disk.h"
+#include "Memory.h"
 #include <fstream>
 #include <string>
 #include <queue>
@@ -7,6 +8,7 @@
 using namespace std;
 
 Disk* hdd;
+Memory* mem;
 queue<unsigned int>* directory;
 
 enum readstate { NONE, TEXT, DATA };
@@ -39,11 +41,8 @@ int* splitstr(string line)
 	return hdr;
 }
 
-int main()
+void loadPrograms()
 {
-	//initialize hard drive
-	hdd = new Disk();
-
 	//load the program file
 	ifstream file;
 	file.open("Program-File.txt", ios::in);
@@ -82,7 +81,7 @@ int main()
 
 			//split into the three number components
 			int* hdr = splitstr(line);
-			
+
 			//write to file
 			hdd->append(currentfile, hdr, 3);
 
@@ -92,6 +91,45 @@ int main()
 
 		//now time to continue reading
 		string instruction;
+		int ins;
 		queue<int> instructions;
+
+		//read lines of data until we reach // END or // Data lines
+		while (getline(file, instruction) && instruction.substr(0, 2) == "0x")
+		{
+			instruction = instruction.substr(2); //cut off the 0x bit
+			stringstream ss;
+			ss << hex << instruction;
+			ss >> ins;
+			instructions.push(ins);
+		}
+
+		//convert instructions/data values into an array to write to the hdd
+		size_t length = instructions.size();
+		int* values = new int[length];
+		int currentindex = 0;
+		while (currentindex < length)
+		{
+			values[currentindex] = instructions.front();
+			instructions.pop();
+			currentindex++;
+		}
+
+		//append data
+		hdd->append(currentfile, values, length);
 	}
+}
+
+int main()
+{
+	//initialize hard drive
+	hdd = new Disk();
+
+	//initialize virtual memory
+	mem = new Memory();
+
+	//load programs from host file into virtual hard drive
+	loadPrograms();
+
+
 }

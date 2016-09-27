@@ -65,15 +65,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Disk.h" />
+    <ClInclude Include="Kernel.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="PCB.h" />
+    <ClInclude Include="ProcessInfo.h" />
     <ClInclude Include="Processor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Disk.cpp" />
+    <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="PCB.cpp" />
+    <ClCompile Include="ProcessInfo.cpp" />
     <ClCompile Include="Processor.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
