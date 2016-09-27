@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Disk.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Processor.cpp" />
