@@ -1,23 +1,19 @@
-#include "LTS.h"
+#include "PCB.h"
 #include "Node.h"
-#include "Processor.h"
-#include "ProcessInfo.h"
+#include <vector>
+#include "Disk.h"
 
 #pragma once
-class STS
+class LTS
 {
-public:
-	STS();
-	~STS();
-	void addToQueue(int pid); // adds to linkedlist
-	void removeFrom(int pid); // removes from linked list
-	void interrupt(int pid); //sends interrupt signal to processor in case of higher priority.
-	void action(int pid); //determines action to be taken after checkstate
-	void incPriority(int pid); //increases priority after a certian wait time; DOES NOT NEED IMPLEMENTATION YET
-
+public: 
+	LTS();
+	~LTS();
+	void addToQueue(int pid); //adds to LinkedList
+	void removeFrom(int pid); //Removes from LinkedList
+	void assignProcessor(unsigned int i); //If 1 processor, always uses 0
+	void checkBalance(); //checks the balance of the CPU load if multiple processors
 private:
-	ProcessState checkState(int pid); //Checks process state to determine action
-	unsigned long checkCTme(int pid); //checks time on CPU for each process
-	unsigned long checkWTime(int pid); //checks time in queue
+	PCB *conBlock;
 	Node<PCB>* pList;
 };
