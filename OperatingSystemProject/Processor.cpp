@@ -1,9 +1,10 @@
 #include "Processor.h"
 
 
-Processor::Processor()
+Processor::Processor(Memory* ram)
 {
 	this->registers = new int[16];
+	this->physical_ram = ram;
 }
 
 Processor::~Processor()
@@ -11,9 +12,64 @@ Processor::~Processor()
 	delete this->registers;
 }
 
-void Processor::RD() {}; //not sure how to implement yet
+void Processor::run()
+{
+	halted = false;
+	while (!halted)
+	{
+		unsigned int instruction = fetch();
+		decode_and_execute(instruction);
+	}
+};
 
-void Processor::WR() {}; //not sure how to implement yet
+int Processor::fetch()
+{
+	unsigned int addr = this->pc + this->base_addr;
+	return this->physical_ram->get(addr);
+};
+
+void Processor::decode_and_execute(unsigned int instruction)
+{
+	unsigned int type = (instruction & 0xC0000000); //isolate the two leftmost bits
+	unsigned int opcode = (instruction & 0x3F000000); //isolate the 6 opcode bits
+
+	if (type == INSTRUCTION_ARITHMETIC)
+	{
+
+	}
+	else if (type == INSTRUCTION_CONDITIONAL)
+	{
+		
+	}
+	else if (type == INSTRUCTION_IO)
+	{
+
+	}
+	else /*if(type == INSTRUCTION_JUMP*/
+	{
+
+	}
+};
+
+void Processor::interrupt()
+{
+
+};
+
+void Processor::interrupt(int* instructions, size_t length)
+{
+
+};
+
+void Processor::RD()
+{
+
+}; //not sure how to implement yet
+
+void Processor::WR()
+{
+
+}; //not sure how to implement yet
 
 void Processor::ST(unsigned char reg1, unsigned short addr)
 {

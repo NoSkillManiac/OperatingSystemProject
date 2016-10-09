@@ -1,11 +1,49 @@
+#include <thread>
+#include "Memory.h"
+
+#define INSTRUCTION_IO			0xC0000000 //11
+#define INSTRUCTION_JUMP		0x80000000 //10
+#define INSTRUCTION_CONDITIONAL	0x40000000 //01
+#define INSTRUCTION_ARITHMETIC	0x00000000 //00
+
+#define OP_RD					0x00
+#define OP_WR					0x01
+#define OP_ST					0x02
+#define OP_LW					0x03
+#define OP_MOV					0x04
+#define OP_ADD					0x05
+#define OP_SUB					0x06
+#define OP_MUL					0x07
+#define OP_DIV					0x08
+#define OP_AND					0x09
+#define OP_OR					0x0A
+#define OP_MOVI					0x0B
+#define OP_ADDI					0x0C
+#define OP_MULI					0x0D
+#define OP_DIVI					0x0E
+#define OP_LDI					0x0F
+#define OP_SLT					0x10
+#define OP_SLTI					0x11
+#define OP_HLT					0x12
+#define OP_NOP					0x13
+#define OP_JMP					0x14
+#define OP_BEQ					0x15
+#define OP_BNE					0x16
+#define OP_BEZ					0x17
+#define OP_BNZ					0x18
+#define OP_BGZ					0x19
+#define OP_BLZ					0x1A
+
 #pragma once
 class Processor
 {
 public:
-	Processor();
+	Processor() {};
+	Processor(Memory* ram);
 	~Processor();
 	void interrupt();
-	void interrupt(int* instructions);
+	void interrupt(int* instructions, size_t count);
+	void resume();
 	
 private:
 	//registers[0] is the accumulator
@@ -13,10 +51,13 @@ private:
 	//registers[2] --> registers[15] are general purpose registers
 	int* registers; //holds 16 integers, initialized in the constructor
 	unsigned short pc; //program counter
+	bool halted = false; //is the processor halted right now?
+	int base_addr;
+	Memory* physical_ram;
 
-	void fetch(); //fetch the next instruction
-	void decode(int instruction); //decode the instruction given
-	void execute(); //execute the instruction
+	void run(); //runs the fetch, decode, execute loop
+	int fetch(); //fetch the next instruction
+	void decode_and_execute(unsigned int instruction); //decode the instruction given
 
 	void RD(); //not sure how to implement yet
 	void WR(); //not sure how to implement yet

@@ -14,7 +14,7 @@ public:
 	~Kernel();
 
 private:
-	Processor* processors;
+	Processor** processors;
 	PCB* pcb;
 	Memory* ram;
 	Disk* hdd;
