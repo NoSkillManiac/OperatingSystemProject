@@ -2,14 +2,17 @@
 #include "Memory.h"
 #include <fstream>
 #include <string>
-#include <queue>
+#include <vector>
 #include <sstream>
+#include <queue>
+#include "Kernel.h"
 
 using namespace std;
 
 Disk* hdd;
 Memory* mem;
-queue<unsigned int>* directory;
+vector<unsigned int, std::allocator<char32_t>>* directory;
+Kernel* kernel;
 
 enum readstate { NONE, TEXT, DATA };
 
@@ -58,7 +61,7 @@ void loadPrograms()
 
 			//start a new file
 			currentfile = hdd->mkfile();
-			directory->push(currentfile);
+			directory->push_back(currentfile);
 
 			//remove "// JOB "
 			line = line.substr(0, 8);
@@ -122,6 +125,9 @@ void loadPrograms()
 
 int main()
 {
+	//initialize the directory
+	directory = new vector<unsigned int, std::allocator<char32_t>>();
+
 	//initialize hard drive
 	hdd = new Disk();
 
@@ -131,5 +137,6 @@ int main()
 	//load programs from host file into virtual hard drive
 	loadPrograms();
 
-
+	//initialize the kernel and its subsystems
+	kernel = new Kernel(mem, hdd, directory);
 }

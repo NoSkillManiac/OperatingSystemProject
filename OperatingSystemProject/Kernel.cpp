@@ -1,7 +1,7 @@
 #include "Kernel.h"
 
 
-Kernel::Kernel(Memory* virtualram, Disk* virtualdisk, std::vector<unsigned int>* directory)
+Kernel::Kernel(Memory* virtualram, Disk* virtualdisk, std::vector<unsigned int, std::allocator<char32_t>>* directory)
 {
 	//accept the parameters
 	this->files = directory;

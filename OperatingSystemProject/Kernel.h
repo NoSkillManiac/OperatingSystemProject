@@ -12,7 +12,7 @@
 class Kernel
 {
 public:
-	Kernel(Memory* virtualram, Disk* virtualdisk, std::vector<unsigned int>* directory);
+	Kernel(Memory* virtualram, Disk* virtualdisk, std::vector<unsigned int, std::allocator<char32_t>>* directory);
 	~Kernel();
 
 private:
