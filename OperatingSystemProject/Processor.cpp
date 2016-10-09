@@ -31,11 +31,20 @@ int Processor::fetch()
 void Processor::decode_and_execute(unsigned int instruction)
 {
 	unsigned int type = (instruction & 0xC0000000); //isolate the two leftmost bits
-	unsigned int opcode = (instruction & 0x3F000000); //isolate the 6 opcode bits
+	unsigned int opcode = (instruction & 0x3F000000) >> 24; //isolate the 6 opcode bits and shift them to the far right
+
+	//type does not get shifted. The two type bits simply get isolated and then compared to save time from bitshifting
+	//opcode has the 6 opcode bits isolated and then shifted because easier
 
 	if (type == INSTRUCTION_ARITHMETIC)
 	{
-
+		char s1 = (char)((instruction & 0x00F00000) >> 20);
+		char s2 = (char)((instruction & 0x000F0000) >> 16);
+		char dr = (char)((instruction & 0x0000F000) >> 12);
+		switch (opcode)
+		{
+		case: OP_
+		}
 	}
 	else if (type == INSTRUCTION_CONDITIONAL)
 	{
@@ -73,12 +82,12 @@ void Processor::WR()
 
 void Processor::ST(unsigned char reg1, unsigned short addr)
 {
-	//not ready to implement
+	this->physical_ram->set(addr, this->registers[reg1]);
 };
 
 void Processor::LW(unsigned char reg1, unsigned short addr)
 {
-	//not ready to implement
+	this->registers[reg1] = this->physical_ram->get(addr);
 };
 
 void Processor::MOV(unsigned char reg1, unsigned char reg2)
@@ -116,29 +125,30 @@ void Processor::OR(unsigned char sreg1, unsigned char sreg2, unsigned char dreg)
 	this->registers[dreg] = this->registers[sreg1] || this->registers[sreg2];
 };
 
-void Processor::MOVI(short data, unsigned char dreg)
+void Processor::MOVI(int data, unsigned char dreg)
 {
-	//not ready to implement
+	this->registers[dreg] = data;
 };
 
-void Processor::ADDI(short imm, unsigned char dreg)
+void Processor::ADDI(int imm, unsigned char dreg)
 {
-	//not ready to implement
+	this->registers[dreg] += imm;
 };
 
-void Processor::MULI(short imm, unsigned char dreg)
+void Processor::MULI(int imm, unsigned char dreg)
 {
-	//not ready to implement
+	this->registers[dreg] *= imm;
 };
 
-void Processor::DIVI(short data, unsigned char dreg)
+void Processor::DIVI(int data, unsigned char dreg)
 {
-	//not ready to implement
+	this->registers[dreg] /= data;
 };
 
 void Processor::LDI(short data, unsigned char dreg)
 {
-	//not ready to implement
+	//I am assuming this sets the value of dreg to the value held at the memory location
+	this->registers[dreg] = this->physical_ram->get(data + base_addr);
 };
 
 void Processor::SLT(unsigned char sreg, unsigned char breg, unsigned char dreg)
@@ -149,14 +159,18 @@ void Processor::SLT(unsigned char sreg, unsigned char breg, unsigned char dreg)
 		this->registers[dreg] = 0;
 };
 
-void Processor::SLTI(unsigned char sreg, short imm, unsigned char dreg)
+void Processor::SLTI(unsigned char sreg, int imm, unsigned char dreg)
 {
 	//not ready to implement
+	if (this->registers[sreg] > imm)
+		this->registers[dreg] = 1;
+	else
+		this->registers[dreg] = 0;
 };
 
 void Processor::HLT()
 {
-	//not ready to implement
+	this->halted = true;
 };
 
 void Processor::NOP()

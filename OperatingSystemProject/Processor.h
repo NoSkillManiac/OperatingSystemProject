@@ -70,13 +70,13 @@ private:
 	void DIV(unsigned char sreg1, unsigned char sreg2, unsigned char dreg); //sreg1/sreg2 --> dreg
 	void AND(unsigned char sreg1, unsigned char sreg2, unsigned char dreg); //logical AND of sreg1 and sreg2, store in dreg
 	void OR(unsigned char sreg1, unsigned char sreg2, unsigned char dreg); //logical OR of sreg1 and sreg2, store in dreg
-	void MOVI(short data, unsigned char dreg); //transfer data/addr into dreg
-	void ADDI(short imm, unsigned char dreg); //add imm to dreg
-	void MULI(short imm, unsigned char dreg); //multiply imm data by dreg data
-	void DIVI(short imm, unsigned char dreg); //divide dreg data by imm data
+	void MOVI(int data, unsigned char dreg); //transfer data/addr into dreg
+	void ADDI(int imm, unsigned char dreg); //add imm to dreg
+	void MULI(int imm, unsigned char dreg); //multiply imm data by dreg data
+	void DIVI(int imm, unsigned char dreg); //divide dreg data by imm data
 	void LDI(short data, unsigned char dreg); //load data/address into dreg
 	void SLT(unsigned char sreg, unsigned char breg, unsigned char dreg); //set dreg to 1 if sreg < breg, 0 if otherwise
-	void SLTI(unsigned char sreg, short imm, unsigned char dreg); //set dreg to 1 if sreg < imm, 0 if otherwise
+	void SLTI(unsigned char sreg, int imm, unsigned char dreg); //set dreg to 1 if sreg < imm, 0 if otherwise
 	void HLT(); //logical end of the program
 	void NOP(); //no-op
 	void JMP(unsigned short addr); //jump to the set address (set the pc to the address of the instruction to jump to)
