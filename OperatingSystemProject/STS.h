@@ -19,5 +19,5 @@ private:
 	ProcessState checkState(int pid); //Checks process state to determine action
 	unsigned long checkCTme(int pid); //checks time on CPU for each process
 	unsigned long checkWTime(int pid); //checks time in queue
-	Node<PCB>* pList;
+	Node<ProcessInfo>* pList;
 };

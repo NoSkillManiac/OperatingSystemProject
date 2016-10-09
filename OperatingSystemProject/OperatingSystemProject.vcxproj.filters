@@ -36,6 +36,12 @@
     <ClInclude Include="Kernel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="STS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LTS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Processor.cpp">

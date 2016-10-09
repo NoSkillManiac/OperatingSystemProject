@@ -66,11 +66,13 @@
   <ItemGroup>
     <ClInclude Include="Disk.h" />
     <ClInclude Include="Kernel.h" />
+    <ClInclude Include="LTS.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="PCB.h" />
     <ClInclude Include="ProcessInfo.h" />
     <ClInclude Include="Processor.h" />
+    <ClInclude Include="STS.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Disk.cpp" />
