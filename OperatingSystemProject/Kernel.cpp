@@ -18,8 +18,11 @@ Kernel::Kernel(Memory* virtualram, Disk* virtualdisk, std::vector<unsigned int>*
 		this->processors[i] = new Processor(virtualram);
 	}
 
-	//TODO: Initialize long term scheduler
-	//TODO: Initialize short term scheduler
+	//initialize the long term scheduler
+	this->lts = new LTS();
+
+	//Initialize short term scheduler
+	this->sts = new STS();
 }
 
 
