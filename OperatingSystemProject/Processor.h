@@ -42,7 +42,6 @@ public:
 	Processor(Memory* ram);
 	~Processor();
 	void interrupt();
-	void interrupt(int* instructions, size_t count);
 	void resume();
 	
 private:
@@ -54,6 +53,7 @@ private:
 	bool halted = false; //is the processor halted right now?
 	int base_addr;
 	Memory* physical_ram;
+	std::thread* run_thread = NULL;
 
 	void run(); //runs the fetch, decode, execute loop
 	int fetch(); //fetch the next instruction
